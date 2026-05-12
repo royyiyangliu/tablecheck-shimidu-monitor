@@ -46,7 +46,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
+          git pull --rebase origin master
           git add availability_log.csv screenshots/ api_dumps/ html_dumps/ 2>/dev/null || true
           # 如果有变更才提交
           if git diff --staged --quiet; then
