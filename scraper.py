@@ -96,34 +96,26 @@ async def scrape():
         if timetable_data is None:
             await page.wait_for_timeout(3000)
 
-        # 尝试通过修改 API URL 扩展日期范围到 TARGET_DAYS 天
+        # 用第二次请求补全至 TARGET_DAYS 天（API 固定窗口约6天，无结束日期参数）
+        # 将 reservation[start_date] 设为 今天+6，获取后续日期后合并
         if timetable_url and timetable_data:
-            target_end = (now_jst + timedelta(days=TARGET_DAYS)).strftime("%Y-%m-%d")
             parsed = urllib.parse.urlparse(timetable_url)
             params = dict(urllib.parse.parse_qsl(parsed.query))
-            print(f"  API参数键: {list(params.keys())}")
-
-            extended = False
-            for key in ("end_date", "end", "end_time", "checkout", "to", "last_date"):
-                if key in params:
-                    old_val = params[key]
-                    params[key] = target_end
-                    new_url = urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(params)))
-                    try:
-                        resp = await page.request.get(new_url, timeout=15000)
-                        if resp.ok:
-                            extra = await resp.json()
-                            extra_slots = extra.get("data", {}).get("slots", {})
-                            if extra_slots:
-                                timetable_data["data"]["slots"].update(extra_slots)
-                                print(f"  日期扩展成功: {key} {old_val}→{target_end}，新增{len(extra_slots)}天数据")
-                                extended = True
-                    except Exception as e:
-                        print(f"  日期扩展请求失败({key}): {e}")
-                    break
-
-            if not extended:
-                print(f"  未找到可扩展的日期参数，保留API默认返回范围")
+            start_key = "reservation[start_date]"
+            if start_key in params:
+                extra_start = (now_jst + timedelta(days=6)).strftime("%Y-%m-%d")
+                params[start_key] = extra_start
+                extra_url = urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(params)))
+                try:
+                    resp = await page.request.get(extra_url, timeout=15000)
+                    if resp.ok:
+                        extra = await resp.json()
+                        extra_slots = extra.get("data", {}).get("slots", {})
+                        if extra_slots:
+                            timetable_data["data"]["slots"].update(extra_slots)
+                            print(f"  第二次请求成功，新增 {len(extra_slots)} 天数据（start_date={extra_start}）")
+                except Exception as e:
+                    print(f"  第二次请求失败: {e}")
 
         await page.screenshot(path=f"screenshots/{date_str}.png", full_page=True)
         await browser.close()
