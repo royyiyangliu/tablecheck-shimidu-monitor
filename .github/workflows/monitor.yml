@@ -49,6 +49,7 @@ jobs:
           git pull --rebase --autostash origin master
           # 分路径 add，防止某个目录不存在导致整批失败
           git add availability_log.csv 2>/dev/null || true
+          git add index.html           2>/dev/null || true
           git add screenshots/         2>/dev/null || true
           git add api_dumps/           2>/dev/null || true
           git add html_dumps/          2>/dev/null || true
