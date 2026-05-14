@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """
 TableCheck 预约时段监控 v3 - 新ばし しみづ
-直接解析 /available/timetable API，记录未来7天每个时段的可用状态
+直接解析 /available/timetable API，记录未来8天每个时段的可用状态
 """
 
 import asyncio
 import csv
 import json
 import os
+import urllib.parse
 from datetime import datetime, timezone, timedelta
 from playwright.async_api import async_playwright
 
 JST = timezone(timedelta(hours=9))
 URL = "https://www.tablecheck.com/en/shops/shinbashi-shimidu/reserve"
 NUM_PEOPLE = 2   # 默认抓取2人座位的可用情况
+TARGET_DAYS = 8  # 监控未来N天
 
 
 def seconds_to_hhmm(sec: int) -> str:
@@ -29,6 +31,7 @@ async def scrape():
     date_str = now_jst.strftime("%Y%m%d_%H%M%S")
 
     timetable_data = None   # 目标 API 响应
+    timetable_url = None    # 目标 API 完整 URL
 
     os.makedirs("screenshots", exist_ok=True)
     os.makedirs("api_dumps", exist_ok=True)
@@ -49,11 +52,12 @@ async def scrape():
 
         # 只捕获目标 timetable API
         async def handle_response(response):
-            nonlocal timetable_data
+            nonlocal timetable_data, timetable_url
             if "available/timetable" in response.url and response.status == 200:
                 try:
+                    timetable_url = response.url
                     timetable_data = await response.json()
-                    print(f"  [目标API] {response.url[:100]}")
+                    print(f"  [目标API] {response.url[:120]}")
                 except Exception as e:
                     print(f"  [目标API] 解析失败: {e}")
 
@@ -92,11 +96,40 @@ async def scrape():
         if timetable_data is None:
             await page.wait_for_timeout(3000)
 
+        # 尝试通过修改 API URL 扩展日期范围到 TARGET_DAYS 天
+        if timetable_url and timetable_data:
+            target_end = (now_jst + timedelta(days=TARGET_DAYS)).strftime("%Y-%m-%d")
+            parsed = urllib.parse.urlparse(timetable_url)
+            params = dict(urllib.parse.parse_qsl(parsed.query))
+            print(f"  API参数键: {list(params.keys())}")
+
+            extended = False
+            for key in ("end_date", "end", "end_time", "checkout", "to", "last_date"):
+                if key in params:
+                    old_val = params[key]
+                    params[key] = target_end
+                    new_url = urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(params)))
+                    try:
+                        resp = await page.request.get(new_url, timeout=15000)
+                        if resp.ok:
+                            extra = await resp.json()
+                            extra_slots = extra.get("data", {}).get("slots", {})
+                            if extra_slots:
+                                timetable_data["data"]["slots"].update(extra_slots)
+                                print(f"  日期扩展成功: {key} {old_val}→{target_end}，新增{len(extra_slots)}天数据")
+                                extended = True
+                    except Exception as e:
+                        print(f"  日期扩展请求失败({key}): {e}")
+                    break
+
+            if not extended:
+                print(f"  未找到可扩展的日期参数，保留API默认返回范围")
+
         await page.screenshot(path=f"screenshots/{date_str}.png", full_page=True)
         await browser.close()
 
     # ── 解析 timetable 数据 ────────────────────────────────────────────────
-    rows = []  # 每行：[timestamp, date, time_hhmm, available]
+    rows = []  # 每行：[timestamp, date, avail_str, unavail_str, avail_count]
 
     if timetable_data:
         # 保存原始 API 响应备用
@@ -150,6 +183,13 @@ async def scrape():
 
     total_avail = sum(r[4] for r in rows if isinstance(r[4], int))
     print(f"[{timestamp}] 完成 — {len(rows)} 个日期，共 {total_avail} 个可用时段")
+
+    # 生成可视化 HTML
+    try:
+        import generate_html
+        generate_html.main()
+    except Exception as e:
+        print(f"  [HTML] 生成失败: {e}")
 
 
 if __name__ == "__main__":
