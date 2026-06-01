@@ -1,0 +1,327 @@
+{
+  "queried_date": "2026-06-04",
+  "data": {
+    "slots": {
+      "2026-06-05": {
+        "1780628400": {
+          "available": false,
+          "seconds": 43200
+        },
+        "1780646400": {
+          "available": false,
+          "seconds": 61200
+        },
+        "1780647300": {
+          "available": false,
+          "seconds": 62100
+        },
+        "1780648200": {
+          "available": false,
+          "seconds": 63000
+        },
+        "1780649100": {
+          "available": false,
+          "seconds": 63900
+        },
+        "1780650000": {
+          "available": false,
+          "seconds": 64800
+        },
+        "1780650900": {
+          "available": false,
+          "seconds": 65700
+        },
+        "1780651800": {
+          "available": false,
+          "seconds": 66600
+        },
+        "1780652700": {
+          "available": false,
+          "seconds": 67500
+        },
+        "1780653600": {
+          "available": false,
+          "seconds": 68400
+        },
+        "1780654500": {
+          "available": false,
+          "seconds": 69300
+        }
+      },
+      "2026-06-06": {
+        "1780714800": {
+          "available": false,
+          "seconds": 43200
+        },
+        "1780732800": {
+          "available": false,
+          "seconds": 61200
+        },
+        "1780733700": {
+          "available": false,
+          "seconds": 62100
+        },
+        "1780734600": {
+          "available": false,
+          "seconds": 63000
+        },
+        "1780735500": {
+          "available": false,
+          "seconds": 63900
+        },
+        "1780736400": {
+          "available": false,
+          "seconds": 64800
+        },
+        "1780737300": {
+          "available": false,
+          "seconds": 65700
+        },
+        "1780738200": {
+          "available": false,
+          "seconds": 66600
+        },
+        "1780739100": {
+          "available": false,
+          "seconds": 67500
+        },
+        "1780740000": {
+          "available": false,
+          "seconds": 68400
+        },
+        "1780740900": {
+          "available": false,
+          "seconds": 69300
+        }
+      },
+      "2026-06-02": {
+        "1780369200": {
+          "available": false,
+          "seconds": 43200
+        },
+        "1780387200": {
+          "available": false,
+          "seconds": 61200
+        },
+        "1780388100": {
+          "available": false,
+          "seconds": 62100
+        },
+        "1780389000": {
+          "available": false,
+          "seconds": 63000
+        },
+        "1780389900": {
+          "available": false,
+          "seconds": 63900
+        },
+        "1780390800": {
+          "available": false,
+          "seconds": 64800
+        },
+        "1780391700": {
+          "available": false,
+          "seconds": 65700
+        },
+        "1780392600": {
+          "available": false,
+          "seconds": 66600
+        },
+        "1780393500": {
+          "available": false,
+          "seconds": 67500
+        },
+        "1780394400": {
+          "available": false,
+          "seconds": 68400
+        },
+        "1780395300": {
+          "available": false,
+          "seconds": 69300
+        }
+      },
+      "2026-06-07": {
+        "1780799400": {
+          "available": false,
+          "seconds": 41400
+        },
+        "1780819200": {
+          "available": false,
+          "seconds": 61200
+        },
+        "1780820100": {
+          "available": false,
+          "seconds": 62100
+        },
+        "1780821000": {
+          "available": false,
+          "seconds": 63000
+        },
+        "1780821900": {
+          "available": false,
+          "seconds": 63900
+        },
+        "1780822800": {
+          "available": false,
+          "seconds": 64800
+        },
+        "1780823700": {
+          "available": false,
+          "seconds": 65700
+        },
+        "1780824600": {
+          "available": false,
+          "seconds": 66600
+        },
+        "1780825500": {
+          "available": false,
+          "seconds": 67500
+        },
+        "1780826400": {
+          "available": false,
+          "seconds": 68400
+        },
+        "1780827300": {
+          "available": false,
+          "seconds": 69300
+        }
+      },
+      "2026-06-01": {
+        "1780303500": {
+          "available": false,
+          "seconds": 63900
+        },
+        "1780304400": {
+          "available": false,
+          "seconds": 64800
+        },
+        "1780305300": {
+          "available": false,
+          "seconds": 65700
+        },
+        "1780306200": {
+          "available": false,
+          "seconds": 66600
+        },
+        "1780307100": {
+          "available": false,
+          "seconds": 67500
+        },
+        "1780308000": {
+          "available": false,
+          "seconds": 68400
+        },
+        "1780308900": {
+          "available": false,
+          "seconds": 69300
+        }
+      },
+      "2026-06-08": {
+        "1780887600": {
+          "available": false,
+          "seconds": 43200
+        },
+        "1780905600": {
+          "available": true,
+          "seconds": 61200
+        },
+        "1780906500": {
+          "available": false,
+          "seconds": 62100
+        },
+        "1780907400": {
+          "available": false,
+          "seconds": 63000
+        },
+        "1780908300": {
+          "available": false,
+          "seconds": 63900
+        },
+        "1780909200": {
+          "available": false,
+          "seconds": 64800
+        },
+        "1780910100": {
+          "available": false,
+          "seconds": 65700
+        },
+        "1780911000": {
+          "available": false,
+          "seconds": 66600
+        },
+        "1780911900": {
+          "available": false,
+          "seconds": 67500
+        },
+        "1780912800": {
+          "available": false,
+          "seconds": 68400
+        },
+        "1780913700": {
+          "available": true,
+          "seconds": 69300
+        }
+      },
+      "2026-06-09": {
+        "1780974000": {
+          "available": false,
+          "seconds": 43200
+        },
+        "1780992000": {
+          "available": true,
+          "seconds": 61200
+        },
+        "1780992900": {
+          "available": false,
+          "seconds": 62100
+        },
+        "1780993800": {
+          "available": false,
+          "seconds": 63000
+        },
+        "1780994700": {
+          "available": false,
+          "seconds": 63900
+        },
+        "1780995600": {
+          "available": false,
+          "seconds": 64800
+        },
+        "1780996500": {
+          "available": false,
+          "seconds": 65700
+        },
+        "1780997400": {
+          "available": false,
+          "seconds": 66600
+        },
+        "1780998300": {
+          "available": false,
+          "seconds": 67500
+        },
+        "1780999200": {
+          "available": false,
+          "seconds": 68400
+        },
+        "1781000100": {
+          "available": true,
+          "seconds": 69300
+        }
+      }
+    },
+    "seconds": [
+      41400,
+      43200,
+      61200,
+      62100,
+      63000,
+      63900,
+      64800,
+      65700,
+      66600,
+      67500,
+      68400,
+      69300
+    ]
+  }
+}
